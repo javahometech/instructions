@@ -1,0 +1,4 @@
+Step -1
+     - Create IAM Role for Jenkins
+     - Role name is 'JenkinsAccess'
+     - Policy name is 'AWSCodePipelineCustomActionAccess'
