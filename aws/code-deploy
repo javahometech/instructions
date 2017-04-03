@@ -1,0 +1,17 @@
+Goto AWS and Create a Pipeline in AWS CodePipeline
+
+Step-1
+      - Create IAM role  with name 'CodeDeployInstanceRole', select Amazon EC2 and select
+        policy type 'AmazonEC2RoleforAWSCodeDeploy'
+      - Create IAM role with name 'CodeDeployServiceRole', select Amazon 'Code Deploy' and select
+        policy type 'AWSCodeDeployRole'
+
+
+Step-2
+     - Create EC2 instances 1 or more, under user data paste the following script
+
+          #! /bin/bash
+          yum install -y aws-cli
+          cd /home/ec2-user
+          aws s3 cp 's3://aws-codedeploy-us-east-1/latest/codedeploy-agent.noarch.rpm' . --region us-east-1
+          yum -y install codedeploy-agent.noarch.rpm

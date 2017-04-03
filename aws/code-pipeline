@@ -1,4 +1,45 @@
+Installing Jenkins and preparing Jenkins for integrating with AWS Code Pipeline
 Step -1
      - Create IAM Role for Jenkins
      - Role name is 'JenkinsAccess'
      - Policy name is 'AWSCodePipelineCustomActionAccess'
+Step -2
+     - Launch EC2 Instance and select IAM role 'JenkinsAccess' which is created previously
+     - Install Jenkins
+     - Install 'AWS code pipeline' plugin on Jenkins
+     - Choose 'Back to Dashboard'
+     - Click new item, and name 'MyDemoProject' and select free style project
+     - On the configuration page, under 'Source Code Management', Select 'AWS CodePipeline'
+     - Enter 'JenkinsProvider' in the provider field
+     - Select poll SCM and enter * * * * *
+     - In Build, choose Add build step. Choose Execute shell (Linux, macOS, or Unix)
+      or Execute batch command (Windows), and then type the following:
+        rake
+     - Choose Add post-build action, and then choose AWS CodePipeline Publisher.
+       Choose Add, and in Build Output Locations, leave the location blank.
+       This configuration is the default.
+       It will create a compressed file at the end of the build process.
+     - Choose Save to save your Jenkins project.
+Step - 3
+     - Install rake on Jenkins server, rake is a build tool
+
+
+Goto AWS and Create a Pipeline in AWS CodePipeline
+
+Step-1
+      - Create IAM role  with name 'CodeDeployInstanceRole', select Amazon EC2 and select
+        policy type 'AmazonEC2RoleforAWSCodeDeploy'
+      - Create IAM role with name 'CodeDeployServiceRole', select Amazon 'Code Deploy' and select
+        policy type 'AWSCodeDeployRole'
+
+
+Step-2
+     - Create EC2 instances 1 or more, under user data paste the following script
+
+          #! /bin/bash
+          yum install -y aws-cli
+          cd /home/ec2-user
+          aws s3 cp 's3://aws-codedeploy-us-east-1/latest/codedeploy-agent.noarch.rpm' . --region us-east-1
+          yum -y install codedeploy-agent.noarch.rpm
+
+Step-3

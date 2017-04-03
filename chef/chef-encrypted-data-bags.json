@@ -1,0 +1,39 @@
+Steps to create data bag
+
+Step-1
+    - create 'data_bags' directory under 'chef-repo'
+Step-2
+    - create 'mysql' directory under chef_repo/data_bags in the workstation
+    - create 'mysql' data bag in the chef server by running following command
+    - $ knife data bag create mysql
+Step-3
+    - create secret key for encrypting data bag items
+      You can make use of openssl to generate a secret key as follows:
+      $ openssl rand -base64 512 | tr -d '\r\n' > encrypted_data_bag_secret
+
+Step-3
+    - create item 'hari.json' under 'users' directory
+    {
+      "id": "hari",
+      "userName": "hari.kammana",
+      "password": "Welcome@123"
+    }
+    - create item 'kashvi.json' under 'users' directory
+    {
+     "id":"kashvi",
+     "userName":"kashvi.kammana",
+     "password":"Happy@123"
+    }
+Step-4
+     - upload 'hari.json' & 'kashvi.json' items to the chef server
+     - $ knife data bag from file users kashvi.json --secret-file my_secret_key
+     - $ knife data bag from file users hari.json --secret-file my_secret_key
+
+-- Using data bag items in the chef recipe
+
+users = data_bag('users')
+
+users.each do |linux_user|
+  myUser = data_bag_item('users',linux_user,IO.read('/tmp/my_secret_key'))
+  Chef::Log.warn(myUser['password'])
+end
