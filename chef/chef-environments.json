@@ -1,0 +1,24 @@
+Creating an environment
+  To manage environments, create a directory named 'environments' in the root of your Chef repository.
+  -  create chef-repo/environments/dev.json
+
+  {
+      "name": "dev",
+      "json_class": "Chef::Environment",
+      "description": "development environment",
+      "cookbook_versions": {
+        "couchdb": "= 11.0.0"
+      },
+      "chef_type": "environment",
+      "default_attributes": {
+          "apache2": {
+          "listen_ports": [
+            "80",
+            "443"
+          ]
+          }
+      }
+}
+
+- Create dev environment in chef server by running following command
+  $ knife environment from file dev.json
