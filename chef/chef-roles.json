@@ -23,13 +23,11 @@ create chef-repo/roles/webserver.json with following content
     "production" : [],
     "preprod" : [],
     "dev": [
-      "role[base]",
-      "recipe[apache]",
-      "recipe[apache::copy_dev_configs]"
+      "recipe[tomcat]",
+      "recipe[mysql]"
     ],
-    "test": [
-      "role[base]",
-      "recipe[apache]"
+    "production": [
+      "recipe[tomcat]"
     ]
   },
   "override_attributes": {

@@ -7,7 +7,7 @@ Creating an environment
       "json_class": "Chef::Environment",
       "description": "development environment",
       "cookbook_versions": {
-        "couchdb": "= 11.0.0"
+        "tomcat": "= 1.1.0"
       },
       "chef_type": "environment",
       "default_attributes": {
@@ -18,7 +18,7 @@ Creating an environment
           ]
           }
       }
-}
+  }
 
 - Create dev environment in chef server by running following command
   $ knife environment from file dev.json
